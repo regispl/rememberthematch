@@ -1,0 +1,9 @@
+DateTime==4.0.1
+beautifulsoup4==4.3.2
+gnureadline==6.3.3
+ipython==2.1.0
+pytodoist==0.5
+pytz==2014.4
+requests==2.3.0
+wsgiref==0.1.2
+zope.interface==4.1.1
