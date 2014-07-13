@@ -2,7 +2,7 @@ import logging
 
 from datetime import datetime
 
-from parser import PremierLeagueParser
+from parser import PremierLeagueHTMLParser
 from todoclient import TodoistClient
 
 
@@ -10,7 +10,7 @@ class RememberTheMatch(object):
 
     def __init__(self, username, password, project, interactive=True, dry_run=True):
         self.logger = logging.getLogger(__name__)
-        self.parser = PremierLeagueParser()
+        self.parser = PremierLeagueHTMLParser()
         self.username = username
         self.password = password
         self.project = project

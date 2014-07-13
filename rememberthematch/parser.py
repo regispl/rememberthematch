@@ -1,39 +1,18 @@
 import logging
 import urllib
-import urllib2
+
 from bs4 import BeautifulSoup
 from calendar import timegm
-from datetime import datetime
 from collections import OrderedDict
+from datetime import datetime
+
+from urldownloader import UrlDownloader
 
 
-class UrlDownloader(object):
-
-    def __init__(self, user_agent):
-        self.logger = logging.getLogger(__name__)
-        self.user_agent = user_agent
-
-    def download(self, baseurl, params):
-        url = baseurl % params
-        headers = {'User-agent': self.user_agent}
-        request = urllib2.Request(url, headers=headers)
-
-        try:
-            self.logger.info("Accessing URL: %s" % url)
-            response = urllib2.urlopen(request)
-            html = response.read()
-            self.logger.info("Received response. Content length: %s" % len(html))
-        except Exception, e:
-            print "Failed to download website's contents:", e
-
-        return html
-
-
-class PremierLeagueParser(object):
+class PremierLeagueHTMLParser(object):
 
     # http://www.premierleague.com/ajax/site-header/ajax-all-fixtures.json
     baseurl = "http://www.premierleague.com/en-gb/matchday/matches.html?%s"
-    user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153"
     params = urllib.urlencode({
         "paramClubId": "ALL",
         "paramComp_100": "true",
@@ -42,7 +21,7 @@ class PremierLeagueParser(object):
 
     def __init__(self):
         self.logger = logging.getLogger(__name__)
-        self.downloader = UrlDownloader(self.user_agent)
+        self.downloader = UrlDownloader()
 
     def get_date_timestamp(self, header):
         date_part = header.text.strip().split(" ")
