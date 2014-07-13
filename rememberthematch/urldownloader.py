@@ -13,8 +13,7 @@ class UrlDownloader(object):
         self.logger = logging.getLogger(__name__)
         self.user_agent = user_agent if user_agent else self.DEFAULT_USERAGENT
 
-    def download(self, baseurl, params):
-        url = baseurl % params
+    def download(self, url):
         headers = {'User-agent': self.user_agent}
         request = urllib2.Request(url, headers=headers)
 

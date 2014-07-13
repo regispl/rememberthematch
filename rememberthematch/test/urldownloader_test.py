@@ -32,11 +32,11 @@ class UrlDownloaderTest(unittest.TestCase):
 
     def testDownloaderReturnsExpectedContents(self):
         when(urllib2).urlopen().thenReturn()
-        response_message = self.downloader.download("http://example.com", dict())
+        response_message = self.downloader.download("http://example.com")
         verify(urllib2).urlopen()
         self.assertEqual(response_message, MOCK_MESSAGE)
 
     def testDownloaderRaisesExceptionOnFailure(self):
         when(urllib2).urlopen().thenRaise(Exception("Something went wrong!"))
         with self.assertRaises(UrlDownloaderException):
-            self.downloader.download("http://example.com", dict())
+            self.downloader.download("http://example.com")

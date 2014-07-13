@@ -57,5 +57,6 @@ class PremierLeagueHTMLParser(object):
         return data
 
     def parse(self):
-        html = self.downloader.download(self.baseurl, self.params)
+        url = self.baseurl % self.params
+        html = self.downloader.download(url)
         return self.parse_html(html)
