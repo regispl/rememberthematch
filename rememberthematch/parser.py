@@ -19,9 +19,9 @@ class PremierLeagueHTMLParser(object):
         "view": ".dateSeason"
     })
 
-    def __init__(self):
+    def __init__(self, downloader=None):
         self.logger = logging.getLogger(__name__)
-        self.downloader = UrlDownloader()
+        self.downloader = downloader if downloader else UrlDownloader()
 
     def get_date_timestamp(self, header):
         date_part = header.text.strip().split(" ")
