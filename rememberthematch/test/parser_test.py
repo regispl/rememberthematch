@@ -25,7 +25,7 @@ class PremierLeagueHTMLParserTest(unittest.TestCase):
             when(downloader).download(mock_any()).thenReturn(static_html)
             parser = PremierLeagueHTMLParser(downloader)
             output = parser.parse()
-            timestamps = [int(ts) for ts in output.keys()]
-            self.assertEqual(1432425600, max(timestamps))
-            self.assertEqual(1408147200, min(timestamps))
-            self.assertEqual(41, len(output))
+            timestamps = [int(match['timestamp']) for match in output]
+            self.assertEqual(1432479600, max(timestamps))
+            self.assertEqual(1408201200, min(timestamps))
+            self.assertEqual(380, len(output))
