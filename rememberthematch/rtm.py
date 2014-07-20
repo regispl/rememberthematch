@@ -31,8 +31,8 @@ class RememberTheMatch(object):
             away_team = match['awayTeamName']
             venue = match['venue']['name']
 
-            task_name = self.TASK_NAME_FORMAT % (home_team, away_team, venue)
-            self.client.add_task(timestamp, task_name)
+            task = self.TASK_NAME_FORMAT % (home_team, away_team, venue)
+            self.client.add_task(task, timestamp)
 
     def run(self):
         matches = self.parser.parse()
