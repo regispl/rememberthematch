@@ -2,7 +2,10 @@ import logging
 from abstract import AbstractToDoClient
 from pytodoist import todoist
 
+
 class TodoistClient(AbstractToDoClient):
+
+    DEFAULT_PRIORITY = 3
 
     def __init__(self, username, password, project, dry_run=True):
         super(TodoistClient, self).__init__(dry_run)
@@ -24,5 +27,7 @@ class TodoistClient(AbstractToDoClient):
         log_message += "Adding task: %s %s %s" % (timestamp, name, priority)
         self.logger.info(log_message)
 
+        priority = priority if priority else self.DEFAULT_PRIORITY
+
         if not self.dry_run:
-            self.user.get_project(self.project).add_task(name)
+            self.user.get_project(self.project).add_task(name, priority=priority)

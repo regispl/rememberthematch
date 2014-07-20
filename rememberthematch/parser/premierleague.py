@@ -1,16 +1,38 @@
-import logging
+import json
 import urllib
 
 from bs4 import BeautifulSoup
 from calendar import timegm
 from datetime import datetime
 
-from urldownloader import UrlDownloader
+from rememberthematch.parser.abstract import AbstractParser
 
 
-class PremierLeagueHTMLParser(object):
+class PremierLeagueJSONParser(AbstractParser):
 
-    # http://www.premierleague.com/ajax/site-header/ajax-all-fixtures.json
+    URL = "http://www.premierleague.com/ajax/site-header/ajax-all-fixtures.json"
+
+    def parse_input(self, json_input):
+        json_parsed = json.loads(json_input)
+        matches = json_parsed['siteHeaderSection']['matches']
+
+        # Dummy conversion from millis to seconds
+        for match in matches:
+            match['timestamp'] /= 1000
+
+        return matches
+
+    def parse(self):
+        input_data = self.downloader.download(self.URL)
+
+        try:
+            return self.parse_input(input_data)
+        except Exception, e:
+            raise Exception("Failed to parse input data: %s" % e.message)
+
+
+class PremierLeagueHTMLParser(AbstractParser):
+
     BASE_URL = "http://www.premierleague.com/en-gb/matchday/matches.html?%s"
     PARAMS = urllib.urlencode({
         "paramClubId": "ALL",
@@ -25,10 +47,6 @@ class PremierLeagueHTMLParser(object):
     DATA_TEAMS_IDX = 2
     DATA_VENUE_IDX = 3
 
-    def __init__(self, downloader=None):
-        self.logger = logging.getLogger(__name__)
-        self.downloader = downloader if downloader else UrlDownloader()
-
     def get_formatted_date(self, header):
         date_part = header.text.strip().split(" ")
         if len(date_part[1]) == 1:
@@ -37,9 +55,11 @@ class PremierLeagueHTMLParser(object):
 
     def get_date_timestamp(self, date, time):
         datetime_string = "%s %s" % (date, time)
-        return int(timegm(datetime.strptime(datetime_string, self.DATETIME_PARSER_FORMAT).timetuple()))
+        timestamp = int(timegm(datetime.strptime(datetime_string, self.DATETIME_PARSER_FORMAT).timetuple()))
+        timestamp -= 3600  # FIXME: Timezone hack (to GMT)
+        return timestamp
 
-    def parse_html(self, html):
+    def parse_input(self, html):
         data = []
         soup = BeautifulSoup(html)
         contents = soup.body.find('div', attrs={'widget': 'fixturelistbroadcasters'})
@@ -81,9 +101,9 @@ class PremierLeagueHTMLParser(object):
 
     def parse(self):
         url = self.BASE_URL % self.PARAMS
-        html = self.downloader.download(url)
+        input_data = self.downloader.download(url)
 
         try:
-            return self.parse_html(html)
+            return self.parse_input(input_data)
         except Exception, e:
-            raise Exception("Failed to parse HTML: %s" % e.message)
+            raise Exception("Failed to parse input data: %s" % e.message)

@@ -1,6 +1,6 @@
 import logging
 
-from parser import PremierLeagueHTMLParser
+from rememberthematch.parser.premierleague import PremierLeagueJSONParser
 from todoclient import TodoistClient
 
 
@@ -10,7 +10,7 @@ class RememberTheMatch(object):
 
     def __init__(self, username, password, project, interactive=True, dry_run=True):
         self.logger = logging.getLogger(__name__)
-        self.parser = PremierLeagueHTMLParser()
+        self.parser = PremierLeagueJSONParser()
         self.username = username
         self.password = password
         self.project = project
@@ -32,9 +32,8 @@ class RememberTheMatch(object):
             venue = match['venue']['name']
 
             task_name = self.TASK_NAME_FORMAT % (home_team, away_team, venue)
-            self.client.add_task(timestamp, task_name, venue)
+            self.client.add_task(timestamp, task_name)
 
     def run(self):
         matches = self.parser.parse()
-        self.print_schedule(matches)
         self.add_tasks(matches)
