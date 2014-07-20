@@ -5,7 +5,6 @@ import logging
 from rememberthematch import RememberTheMatch
 
 
-
 def get_parser():
     parser = argparse.ArgumentParser(description='Never forget about the match you want to watch again!')
     parser.add_argument('--username', '-u', dest='username', action='store', required=True, help='Todoist username')
@@ -13,9 +12,9 @@ def get_parser():
     parser.add_argument('--project', '-pr', dest='project', action='store', default="Inbox", help='Todoist project')
     return parser
 
+
 def run():
     args = get_parser().parse_args()
-    print args
     rtm = RememberTheMatch(args.username, args.password, args.project)
     rtm.run()
 

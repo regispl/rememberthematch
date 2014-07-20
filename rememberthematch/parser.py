@@ -3,7 +3,6 @@ import urllib
 
 from bs4 import BeautifulSoup
 from calendar import timegm
-from collections import OrderedDict
 from datetime import datetime
 
 from urldownloader import UrlDownloader
@@ -47,15 +46,22 @@ class PremierLeagueHTMLParser(object):
         rows = contents.find_all('tr')
         match_date = None
         for row in rows:
+
+            # If header, get date and skip
             header = row.find('th')
             if header:
                 match_date = self.get_formatted_date(header)
                 continue
 
+            # TODO: retrieve by td.class?
             cells = row.find_all('td')
             values = []
             for cell in cells:
                 values.append(cell.get_text(strip=True))
+
+            # Extra lines with comments on the schedule
+            if len(values) != 6:
+                continue
 
             match_time = values[self.DATA_TIME_IDX]
             timestamp = self.get_date_timestamp(match_date, match_time)
@@ -76,4 +82,8 @@ class PremierLeagueHTMLParser(object):
     def parse(self):
         url = self.BASE_URL % self.PARAMS
         html = self.downloader.download(url)
-        return self.parse_html(html)
+
+        try:
+            return self.parse_html(html)
+        except Exception, e:
+            raise Exception("Failed to parse HTML: %s" % e.message)

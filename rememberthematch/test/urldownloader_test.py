@@ -30,13 +30,13 @@ class UrlDownloaderTest(unittest.TestCase):
     def tearDown(self):
         unstub()
 
-    def testDownloaderReturnsExpectedContents(self):
+    def test_downloader_returns_expected_content(self):
         when(urllib2).urlopen().thenReturn()
         response_message = self.downloader.download("http://example.com")
         verify(urllib2).urlopen()
         self.assertEqual(response_message, MOCK_MESSAGE)
 
-    def testDownloaderRaisesExceptionOnFailure(self):
+    def test_downloader_raises_exception_on_failure(self):
         when(urllib2).urlopen().thenRaise(Exception("Something went wrong!"))
         with self.assertRaises(UrlDownloaderException):
             self.downloader.download("http://example.com")
