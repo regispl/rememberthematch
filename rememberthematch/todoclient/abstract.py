@@ -8,5 +8,5 @@ class AbstractToDoClient(object):
         self.dry_run = dry_run
 
     @abstractmethod
-    def add_task(self, date, time, name):
+    def add_task(self, timestamp, name, priority=None):
         pass

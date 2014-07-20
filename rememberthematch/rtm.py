@@ -1,7 +1,5 @@
 import logging
 
-from datetime import datetime
-
 from parser import PremierLeagueHTMLParser
 from todoclient import TodoistClient
 
@@ -17,20 +15,22 @@ class RememberTheMatch(object):
         self.interactive = interactive
         self.dry_run = dry_run
 
-    def print_schedule(self, data):
-        for timestamp, matches in data.items():
-            for match in matches:
-                date = datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d')
-                match['date'] = date
-                self.logger.info("%(date)s %(time)s: %(teams)s (%(stadium)s)" % match)
+    def print_schedule(self, matches):
+        for match in matches:
+            self.logger.info("%(timestamp)s: %(homeTeamName)s vs. %(awayTeamName)s at %(venue)s" % match)
 
     def run(self):
-        data = self.parser.parse()
-        self.print_schedule(data)
+        matches = self.parser.parse()
+        self.print_schedule(matches)
+
+        # TODO: needs to be dynamic pasing on script arguments
         todoist_client = TodoistClient(self.username, self.password, self.project)
 
-        for timestamp, matches in data.items():
-            for match in matches:
-                date = datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d')
-                match['date'] = date
-                todoist_client.add_task(match['date'], match['time'], match['teams'])
+        for match in matches:
+            timestamp = match['timestamp']
+            home_team = match['homeTeamName']
+            away_team = match['awayTeamName']
+            venue = match['venue']['name']
+
+            task_name = "%s vs. %s at %s" % (home_team, away_team, venue)
+            todoist_client.add_task(timestamp, task_name, venue)

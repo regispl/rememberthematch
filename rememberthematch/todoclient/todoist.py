@@ -19,7 +19,10 @@ class TodoistClient(AbstractToDoClient):
         if self.dry_run:
             self.logger.info("Running in dry-run mode!")
 
-    def add_task(self, date, time, name):
-        self.logger.info("Adding task: %s %s %s" % (date, time, name))
-        #self.user.get_project(self.project).add_task(name)
-        pass
+    def add_task(self, timestamp, name, priority=None):
+        log_message = "(dry-run) " if self.dry_run else ""
+        log_message += "Adding task: %s %s %s" % (timestamp, name, priority)
+        self.logger.info(log_message)
+
+        if not self.dry_run:
+            self.user.get_project(self.project).add_task(name)
