@@ -10,12 +10,14 @@ def get_parser():
     parser.add_argument('--username', '-u', dest='username', action='store', required=True, help='Todoist username')
     parser.add_argument('--password', '-p', dest='password', action='store', required=True, help='Todoist password')
     parser.add_argument('--project', '-pr', dest='project', action='store', default="Inbox", help='Todoist project')
+    parser.add_argument('--dry-run', dest='dry_run', action='store_true', default=False, help='No tasks will be added')
+
     return parser
 
 
 def run():
     args = get_parser().parse_args()
-    rtm = RememberTheMatch(args.username, args.password, args.project)
+    rtm = RememberTheMatch(args.username, args.password, args.project, dry_run=args.dry_run)
     rtm.run()
 
 if __name__ == "__main__":

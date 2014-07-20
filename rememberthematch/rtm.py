@@ -8,7 +8,7 @@ class RememberTheMatch(object):
 
     TASK_NAME_FORMAT = "%s vs. %s at %s"
 
-    def __init__(self, username, password, project, interactive=True, dry_run=True):
+    def __init__(self, username, password, project, interactive=True, dry_run=False):
         self.logger = logging.getLogger(__name__)
         self.parser = PremierLeagueJSONParser()
         self.username = username
@@ -18,7 +18,7 @@ class RememberTheMatch(object):
         self.dry_run = dry_run
 
         # TODO: needs to be dynamic pasing on script arguments
-        self.client = TodoistClient(self.username, self.password, self.project)
+        self.client = TodoistClient(self.username, self.password, self.project, dry_run=self.dry_run)
 
     def print_schedule(self, matches):
         for match in matches:

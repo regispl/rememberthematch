@@ -6,10 +6,10 @@ from abstract import AbstractToDoClient
 
 class TodoistClient(AbstractToDoClient):
 
-    DATE_FORMAT = "%d.%m.%Y %H:%M"
+    DATE_FORMAT = "%d.%m.%Y @ %H:%M"
     DEFAULT_PRIORITY = 3
 
-    def __init__(self, username, password, project, dry_run=True):
+    def __init__(self, username, password, project, dry_run=False):
         super(TodoistClient, self).__init__(dry_run)
         self.logger = logging.getLogger(__name__)
 
