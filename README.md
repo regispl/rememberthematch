@@ -21,15 +21,15 @@ Or check out help:
 ./bin/rtm --help
 ```
 
-The biggest trick is that at the moment it does nothing.
-But I'm working on it!
+At the moment application supports:
+* Premier League schedule (http://www.premierleague.com)
+* Todoist app (http://todoist.com)
 
-What's working at the moment?
-* NOTHING!
+Currently it's only possible to add all matches of a season, which is not extremally useful, but it will change soon.
 
 Current goals:
-* support Premier League (http://www.premierleague.com)
-* support Todoist app (http://todoist.com)
+* match filtering based on team name (names)
+* add all matches between given teams
 
 Mid-term goals:
 * support Remember The Milk
