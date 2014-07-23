@@ -3,6 +3,7 @@
 import argparse
 import logging
 from rememberthematch import RememberTheMatch
+from rememberthematch.todoclient.config import ToDoClientConfiguration
 
 
 def get_parser():
@@ -21,7 +22,10 @@ def get_parser():
 
 def run():
     args = get_parser().parse_args()
-    rtm = RememberTheMatch(args.username, args.password, args.project, dry_run=args.dry_run)
+
+    todoclient_config = ToDoClientConfiguration(args.username, args.password, args.project, dry_run=args.dry_run)
+
+    rtm = RememberTheMatch(todoclient_config)
     rtm.run()
 
 if __name__ == "__main__":

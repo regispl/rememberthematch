@@ -1,2 +1,3 @@
 from abstract import AbstractToDoClient
+from config import ToDoClientConfiguration
 from todoist import TodoistClient
