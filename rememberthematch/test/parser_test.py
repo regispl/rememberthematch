@@ -25,7 +25,6 @@ class BaseParserTest(unittest.TestCase):
         return os.path.join(dir, filename)
 
 
-
 class PremierLeagueJSONParserTest(BaseParserTest):
 
     def test_parse_sample_json_successfully(self):
