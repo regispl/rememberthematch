@@ -3,6 +3,24 @@ Remember The Match
 
 Never forget about an important match by automatically adding it to your task management app!
 
+Features
+--------
+
+Supported Leagues:
+* Premier League schedule (http://www.premierleague.com)
+
+Supported "TODO" / productivity apps:
+* Todoist app (http://todoist.com)
+
+It is possible to:
+* filter matches by date (`--min-date` and `--max-date`)
+* filter matches by team name for multiple teams (`--team` trigger)
+
+See Filters for details.
+
+Running the app
+---------------
+
 Run the tests:
 
 ```bash
@@ -12,8 +30,10 @@ Run the tests:
 Run the app using your Todoist account credentials:
 
 ```bash
-./bin/rtm --username <login> --password <password>
+./bin/rtm --username <login> --password <password> --dry-run
 ```
+
+Remove `--dry-run` to make it actually work
 
 Or check out help:
 
@@ -21,15 +41,16 @@ Or check out help:
 ./bin/rtm --help
 ```
 
-At the moment application supports:
-* Premier League schedule (http://www.premierleague.com)
-* Todoist app (http://todoist.com)
+Filters
+-------
 
-Currently it's only possible to add all matches of a season, which is not extremally useful, but it will change soon.
+TODO
+
+Roadmap
+-------
 
 Current goals:
-* match filtering based on team name (names)
-* add all matches between given teams
+* add matches between given teams (not only: all matches of given teams)
 
 Mid-term goals:
 * support Remember The Milk
@@ -37,7 +58,7 @@ Mid-term goals:
 * support Champions League
 
 Long term goals:
+* interactive mode (pick matches you want to add manually from the pre-filtered list of your choice)
 * support all major European leagues
 * support all major task management apps
 
-;-)
