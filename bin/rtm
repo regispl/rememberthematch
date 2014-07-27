@@ -2,6 +2,7 @@
 
 import argparse
 import logging
+import sys
 
 from rememberthematch import RememberTheMatch
 from rememberthematch.filter import TeamNameFilter, DateFilter
@@ -53,3 +54,4 @@ def run():
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
     run()
+    sys.exit(0)
