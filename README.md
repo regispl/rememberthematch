@@ -24,13 +24,19 @@ Running the app
 Run the tests:
 
 ```bash
-./bin/nosetests
+python setup.py test
+```
+
+Install:
+
+```bash
+python setup.py install
 ```
 
 Run the app using your Todoist account credentials:
 
 ```bash
-./bin/rtm --username <login> --password <password> --dry-run
+rtm --username <login> --password <password> --dry-run
 ```
 
 Remove `--dry-run` to make it actually work
@@ -38,7 +44,7 @@ Remove `--dry-run` to make it actually work
 Or check out help:
 
 ```bash
-./bin/rtm --help
+rtm --help
 ```
 
 Filters
