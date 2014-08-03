@@ -68,13 +68,13 @@ Note that:
 Filters
 -------
 
-h3. Team Name filter
+### Team Name filter
 
-You can enable filtering by team name by providing at least one team name using `--team` argument. You can provide as many team names as you want. By default filter will filter out all the matches where none of the teams' name exists on the list you provided. When `--only-these-teams`` trigger is set, *both* teams playing need to be on your list. E.g. if you support just a single team and you want to watch all its matches, you probably don't want to use that trigger. If you like to watch all the matches between "Top X" teams, you probably want to combine these team's names with that trigger.
+You can enable filtering by team name by providing at least one team name using `--team` argument. You can provide as many team names as you want. By default filter will filter out all the matches where none of the teams' name exists on the list you provided. When `--only-these-teams`` trigger is set, **both** teams playing need to be on your list. E.g. if you support just a single team and you want to watch all its matches, you probably don't want to use that trigger. If you like to watch all the matches between "Top X" teams, you probably want to combine these team's names with that trigger.
 
-h3. Date filter
+### Date filter
 
-You can enable filtering by date by using one or both of the `--min-date` and `--max-date` arguments. Date format is: YYYY-MM-DD, e.g. 2014-08-31. Date ranges are inclusive, which means that e.g. setting `--max-date` to 2014-08-31 will filter out all the matches that are scheduled to September and later, but will *include* matches played on 31st of August (if any).
+You can enable filtering by date by using one or both of the `--min-date` and `--max-date` arguments. Date format is: YYYY-MM-DD, e.g. 2014-08-31. Date ranges are inclusive, which means that e.g. setting `--max-date` to 2014-08-31 will filter out all the matches that are scheduled to September and later, but will **include** matches played on 31st of August (if any).
 
 Roadmap
 -------
