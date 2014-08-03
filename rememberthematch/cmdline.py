@@ -19,7 +19,10 @@ def get_parser():
     parser.add_argument('--max-date', dest='max_date', action='store', default=None,
                         help="Latest date you're interested in (inclusive). Format: [YYYY-MM-DD]")
 
-    parser.add_argument('--team', dest='teams', action='append', default=[], help="Teams you're interested in.")
+    parser.add_argument('--team', '-t', dest='teams', action='append', default=[], help="Teams you're interested in.")
+    parser.add_argument('--only-these-teams', '-ott', dest='only_these_teams', action='store_true', default=False,
+                        help='Pick only these matches where both teams are on the provided list of teams.' +
+                             'This argument makes sense if more than one --team was provided.')
 
     parser.add_argument('--dry-run', dest='dry_run', action='store_true', default=False, help='No tasks will be added')
     parser.add_argument('--verbose', '-v', dest='verbose', action='store_true', default=False, help='Change log level to DEBUG')
@@ -31,7 +34,7 @@ def get_filters(args):
     filters = []
 
     if args.teams:
-        filters.append(TeamNameFilter(args.teams))
+        filters.append(TeamNameFilter(args.teams, args.only_these_teams))
 
     if args.min_date or args.max_date:
         filters.append(DateFilter(min=args.min_date, max=args.max_date))

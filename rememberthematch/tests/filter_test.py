@@ -27,7 +27,22 @@ class TeamNameFilterTest(unittest.TestCase):
         self.assertEquals(matches[2], matches_f[1])
 
     def test_filter_no_matches(self):
-        f = TeamNameFilter("teamX")
+        f = TeamNameFilter(["teamX"])
+        matches = self.get_matches()
+        matches_f = f.filter(matches)
+
+        self.assertEquals(0, len(matches_f))
+
+    def test_filter_matches_only_given_teams(self):
+        f = TeamNameFilter(["teamA", "teamC"], only_these_teams=True)
+        matches = self.get_matches()
+        matches_f = f.filter(matches)
+
+        self.assertEquals(1, len(matches_f))
+        self.assertEquals(matches[2], matches_f[0])
+
+    def test_filter_no_matches_only_given_teams(self):
+        f = TeamNameFilter(["teamX", "teamY"], only_these_teams=True)
         matches = self.get_matches()
         matches_f = f.filter(matches)
 
