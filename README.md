@@ -60,6 +60,7 @@ Current goals:
 
 Mid-term goals:
 * support Remember The Milk
+* support Wunderlist
 * support Primera Division
 * support Champions League
 
