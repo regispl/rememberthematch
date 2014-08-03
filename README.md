@@ -54,7 +54,7 @@ Real-life usage example
 I'm a big Premier League fan. I like some teams more, but in general I'm interested in all matches between the 6 or 7 top teams and I want to add all these matches to my Todoist "Matches" project. This is how I use this app to do what I want:
 
 ```bash
-rtm --username <login> --password <password> --team Arsenal --team "Man Utd" --team Liverpool --team Chelsea --team "Man City" --team Spurs --team Everton --only-these-teams --dry-run
+rtm --username <login> --password <password> --project Matches --team Arsenal --team "Man Utd" --team Liverpool --team Chelsea --team "Man City" --team Spurs --team Everton --only-these-teams --dry-run
 ```
 
 Of course, just in case, I added `--dry-run` to make sure that I really got what I wanted.  
@@ -63,7 +63,7 @@ Note that:
 * some teams have a bit different names that you would expect - there's no Tottenham: they're called "Spurs" (at the same time Chelsea is Chelsea, not "The Blues", which is a bit inconsistent)
 * if team's name contains space ("Man Utd"), it's necessary to use quotation marks
 * comparisons of team names are case insensitive ("Liverpool" and "liVeRpOOl" are equal)
-
+* project needs to exist prior to adding matches
 
 Filters
 -------
