@@ -19,8 +19,12 @@ class TodoistClient(AbstractToDoClient):
             raise Exception("Failed to log in to Todoist as user %s. Reason: %s" % (username, e))
 
         self.logger.info("Logged in to Todoist as %s" % username)
+        self.logger.info("Using default priority %s unless different value is provided" % self.DEFAULT_PRIORITY)
 
         self.project = self.user.get_project(project)
+
+        if not self.project:
+            raise Exception("Could not find project %s" % project)
 
         if self.dry_run:
             self.logger.info("Running in dry-run mode!")
@@ -30,7 +34,7 @@ class TodoistClient(AbstractToDoClient):
         date = datetime.fromtimestamp(timestamp).strftime(self.DATE_FORMAT)
 
         log_message = "(dry-run) " if self.dry_run else ""
-        log_message += "Adding task: %s %s %s" % (date, name, priority)
+        log_message += "Adding task: %s %s" % (date, name)
         self.logger.info(log_message)
 
         if not self.dry_run:
