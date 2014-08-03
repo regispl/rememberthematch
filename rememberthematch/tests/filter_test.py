@@ -10,9 +10,10 @@ from rememberthematch.filter import TeamNameFilter, DateFilter
 class TeamNameFilterTest(unittest.TestCase):
 
     def get_matches(self):
-        m1 = Match(1, "teamA", "teamB", "venue1")
-        m2 = Match(2, "teamB", "teamC", "venue2")
-        m3 = Match(2, "teamC", "teamA", "venue3")
+        # Team name starting from capital letter is intentional!
+        m1 = Match(1, "TeamA", "TeamB", "venue1")
+        m2 = Match(2, "TeamB", "TeamC", "venue2")
+        m3 = Match(2, "TeamC", "TeamA", "venue3")
         matches = [m1, m2, m3]
 
         return matches
