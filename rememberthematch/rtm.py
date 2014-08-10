@@ -24,7 +24,7 @@ class RememberTheMatch(object):
         self.interactive = interactive
 
         # TODO: needs to be dynamic basing on script arguments
-        self.client = TodoistClient(self.username, self.password, self.project, dry_run=self.dry_run)
+        #self.client = TodoistClient(self.username, self.password, self.project, dry_run=self.dry_run)
         self.client = RememberTheMilkClient(self.username, self.password, self.project, dry_run=self.dry_run)
 
     def print_schedule(self, matches):
