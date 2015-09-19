@@ -55,7 +55,8 @@ I'm a big Premier League fan. I like some teams more, but in general I'm interes
 
 ```bash
 rtm --username <login> --password <password> --project Matches \
-    --team Arsenal --team "Man Utd" --team Liverpool --team Chelsea --team "Man City" --team Spurs --team Everton \
+    --team Arsenal --team "Man Utd" --team Liverpool --team Chelsea \
+    --team "Man City" --team Spurs --team Everton \
     --only-these-teams --dry-run
 ```
 
