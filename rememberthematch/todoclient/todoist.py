@@ -6,7 +6,7 @@ from abstract import AbstractToDoClient
 
 class TodoistClient(AbstractToDoClient):
 
-    DATE_FORMAT = "%m/%d/%Y at %H:%M"
+    DATE_FORMAT = "%d/%m/%Y at %H:%M"
     DEFAULT_PRIORITY = 3
 
     def __init__(self, username, password, project, dry_run=False):
