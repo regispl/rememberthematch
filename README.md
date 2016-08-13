@@ -55,16 +55,15 @@ I'm a big Premier League fan. I like some teams more, but in general I'm interes
 
 ```bash
 rtm --username <login> --password <password> --project Matches \
-    --team Arsenal --team "Man Utd" --team Liverpool --team Chelsea \
-    --team "Man City" --team Spurs --team Everton \
+    --team Arsenal --team "Man United" --team Liverpool --team Chelsea \
+    --team "Man City" --team Tottenham --team Everton \
     --only-these-teams --dry-run
 ```
 
 Of course, just in case, I added `--dry-run` to make sure that I really got what I wanted.  
 
 Note that:
-* some teams have a bit different names that you would expect - there's no Tottenham: they're called "Spurs" (at the same time Chelsea is Chelsea, not "The Blues", which is a bit inconsistent)
-* if team's name contains space ("Man Utd"), it's necessary to use quotation marks
+* if team's name contains space ("Man United"), it's necessary to use quotation marks
 * comparisons of team names are case insensitive ("Liverpool" and "liVeRpOOl" are equal)
 * project needs to exist prior to adding matches
 

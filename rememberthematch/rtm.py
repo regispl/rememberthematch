@@ -1,17 +1,22 @@
 import logging
 
 from match import Match
-from parser.premierleague import PremierLeagueJSONParser
+from provider.premierleague import PremierLeagueDataProvider
 from todoclient import TodoistClient
+
+from rememberthematch.client.ssod import PremierLeagueAPIClient
 
 
 class RememberTheMatch(object):
 
     TASK_NAME_FORMAT = "%s vs. %s at %s"
 
-    def __init__(self, todoclient_config, filters, interactive=True):
+    def __init__(self, api_key, todoclient_config, filters, interactive=True):
         self.logger = logging.getLogger(__name__)
-        self.parser = PremierLeagueJSONParser()
+        logging.getLogger("requests").setLevel(logging.WARNING)
+
+        self.parser = PremierLeagueDataProvider(client=PremierLeagueAPIClient(api_key))
+
         self.filters = filters
 
         # TodoClient Configuration
@@ -22,7 +27,7 @@ class RememberTheMatch(object):
 
         self.interactive = interactive
 
-        # TODO: needs to be dynamic basing on script arguments
+        # TODO: needs to be dynamic based on script arguments
         self.client = TodoistClient(self.username, self.password, self.project, dry_run=self.dry_run)
 
     def print_schedule(self, matches):
@@ -35,7 +40,7 @@ class RememberTheMatch(object):
             timestamp = item['timestamp']
             home_team = item['homeTeamName']
             away_team = item['awayTeamName']
-            venue = item['venue']['name']
+            venue = item['venue']
             matches.append(Match(timestamp, home_team, away_team, venue))
         return matches
 
@@ -45,7 +50,7 @@ class RememberTheMatch(object):
             self.client.add_task(task, match.timestamp)
 
     def run(self):
-        matches = self.get_matches(self.parser.parse())
+        matches = self.get_matches(self.parser.get())
 
         for filter in self.filters:
             matches = filter.filter(matches)

@@ -1,3 +1,0 @@
-from abstract import AbstractParser
-from premierleague import PremierLeagueHTMLParser
-from premierleague import PremierLeagueJSONParser

@@ -14,6 +14,9 @@ def get_parser():
     parser.add_argument('--password', '-p', dest='password', action='store', required=True, help='Todoist password')
     parser.add_argument('--project', '-pr', dest='project', action='store', default="Inbox", help='Todoist project')
 
+    parser.add_argument('--mashape-key', '-k', dest='mashape_key', action='store', required=True,
+                        help='Key for accessing Soccer Sports Open Data API via Mashape; see: https://market.mashape.com/sportsop/soccer-sports-open-data')
+
     parser.add_argument('--min-date', dest='min_date', action='store', default=None,
                         help="Earliest date you're interested in (inclusive). Format: [YYYY-MM-DD]")
     parser.add_argument('--max-date', dest='max_date', action='store', default=None,
@@ -48,10 +51,11 @@ def run():
     if args.verbose:
         logging.getLogger().setLevel(logging.DEBUG)
 
+    api_key = args.mashape_key
     todoclient_config = ToDoClientConfiguration(args.username, args.password, args.project, dry_run=args.dry_run)
     filters = get_filters(args)
 
-    rtm = RememberTheMatch(todoclient_config, filters)
+    rtm = RememberTheMatch(api_key, todoclient_config, filters)
     rtm.run()
 
 
