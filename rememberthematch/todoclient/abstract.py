@@ -10,3 +10,7 @@ class AbstractToDoClient(object):
     @abstractmethod
     def add_task(self, name, timestamp, priority=None):
         pass
+
+    @abstractmethod
+    def commit(self):
+        pass

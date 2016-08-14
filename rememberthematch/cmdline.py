@@ -10,11 +10,10 @@ from rememberthematch.todoclient.config import ToDoClientConfiguration
 def get_parser():
     parser = argparse.ArgumentParser(description='Never forget about the match you want to watch again!')
 
-    parser.add_argument('--username', '-u', dest='username', action='store', required=True, help='Todoist username')
-    parser.add_argument('--password', '-p', dest='password', action='store', required=True, help='Todoist password')
+    parser.add_argument('--todoist-key', '-tk', dest='todoist_key', action='store', required=True, help='Todoist API key (all scopes - temporary solution)')
     parser.add_argument('--project', '-pr', dest='project', action='store', default="Inbox", help='Todoist project')
 
-    parser.add_argument('--mashape-key', '-k', dest='mashape_key', action='store', required=True,
+    parser.add_argument('--mashape-key', '-mk', dest='mashape_key', action='store', required=True,
                         help='Key for accessing Soccer Sports Open Data API via Mashape; see: https://market.mashape.com/sportsop/soccer-sports-open-data')
 
     parser.add_argument('--min-date', dest='min_date', action='store', default=None,
@@ -51,11 +50,11 @@ def run():
     if args.verbose:
         logging.getLogger().setLevel(logging.DEBUG)
 
-    api_key = args.mashape_key
-    todoclient_config = ToDoClientConfiguration(args.username, args.password, args.project, dry_run=args.dry_run)
+    mashape_key = args.mashape_key
+    todoclient_config = ToDoClientConfiguration(args.todoist_key, args.project, dry_run=args.dry_run)
     filters = get_filters(args)
 
-    rtm = RememberTheMatch(api_key, todoclient_config, filters)
+    rtm = RememberTheMatch(mashape_key, todoclient_config, filters)
     rtm.run()
 
 

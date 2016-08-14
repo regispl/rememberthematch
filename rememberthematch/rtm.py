@@ -9,7 +9,9 @@ from rememberthematch.client.ssod import PremierLeagueAPIClient
 
 class RememberTheMatch(object):
 
-    TASK_NAME_FORMAT = "%s vs. %s at %s"
+    # FIXME: Add back the location - need to be retrieved from Sports Open Data API
+    #TASK_NAME_FORMAT = "%s vs. %s at %s"
+    TASK_NAME_FORMAT = "%s vs. %s"
 
     def __init__(self, api_key, todoclient_config, filters, interactive=True):
         self.logger = logging.getLogger(__name__)
@@ -20,15 +22,14 @@ class RememberTheMatch(object):
         self.filters = filters
 
         # TodoClient Configuration
-        self.username = todoclient_config.username
-        self.password = todoclient_config.password
+        self.api_token = todoclient_config.api_token
         self.project = todoclient_config.project
         self.dry_run = todoclient_config.dry_run
 
         self.interactive = interactive
 
         # TODO: needs to be dynamic based on script arguments
-        self.client = TodoistClient(self.username, self.password, self.project, dry_run=self.dry_run)
+        self.client = TodoistClient(self.api_token, self.project, dry_run=self.dry_run)
 
     def print_schedule(self, matches):
         for match in matches:
@@ -46,8 +47,10 @@ class RememberTheMatch(object):
 
     def add_tasks(self, matches):
         for match in matches:
-            task = self.TASK_NAME_FORMAT % (match.home_team, match.away_team, match.venue)
+            task = self.TASK_NAME_FORMAT % (match.home_team, match.away_team)
             self.client.add_task(task, match.timestamp)
+        if len(matches) > 0:
+            self.client.commit()
 
     def run(self):
         matches = self.get_matches(self.parser.get())
