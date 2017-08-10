@@ -24,4 +24,4 @@ class PremierLeagueDataProvider(AbstractDataProvider):
 
             return parsed
         except Exception, e:
-            raise Exception("Failed to parse input data: %s" % e.message)
+            raise Exception("Failed to parse input data: %s" % e)

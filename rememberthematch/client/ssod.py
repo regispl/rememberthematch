@@ -1,9 +1,10 @@
+import logging
 import grequests
 
 
 # TODO: Add AbstractClient
 # FIXME: This guy is more than a client ATM, should not process the data - it's temporary (at least it should be ;-) )
-class PremierLeagueAPIClient:
+class PremierLeagueAPIClient(object):
 
     BASE_URL = "https://sportsop-soccer-sports-open-data-v1.p.mashape.com"
     VERSION = "v1"
@@ -14,9 +15,10 @@ class PremierLeagueAPIClient:
     }
 
     LEAGUE_SLUG = "premier-league"
-    SEASON_SLUG = "16-17"
+    SEASON_SLUG = "17-18"
 
     def __init__(self, api_key):
+        self.logger = logging.getLogger(__name__)
         self.HEADERS.update({
             "X-Mashape-Key": api_key
         })
@@ -29,6 +31,8 @@ class PremierLeagueAPIClient:
             "league_slug": self.LEAGUE_SLUG,
             "season_slug": self.SEASON_SLUG
         }
+
+        self.logger.info("Querying: " + url % params)
 
         rs = [grequests.get(url % params, headers=self.HEADERS)]
         rounds_json = grequests.map(rs)[0].json()['data']['rounds']
@@ -56,7 +60,7 @@ class PremierLeagueAPIClient:
             params.update({
                 "round_slug": round
             })
-            rs.append(grequests.get(url % params, headers=self.HEADERS))
+            rs.append(grequests.get(url % params, headers=self.HEADERS, timeout=20))
 
         resp = grequests.map(rs)
 
